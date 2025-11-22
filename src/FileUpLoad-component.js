@@ -1,8 +1,8 @@
 class FileUploadComponent {
   constructor(containerId) {
     this.container = document.getElementById(containerId)
-    this.render()
     this.submittedFile = null
+    this.render()
   }
   
   render() {
