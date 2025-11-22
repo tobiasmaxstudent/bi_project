@@ -1,4 +1,4 @@
-class TableComponent {
+export class TableComponent {
     constructor(containerId) {
         this.container = document.getElementById(containerId)
         this.render()

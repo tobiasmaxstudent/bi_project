@@ -1,7 +1,8 @@
-class FileUploadComponent {
+export class FileUploadComponent {
   constructor(containerId) {
     this.container = document.getElementById(containerId)
     this.submittedFile = null
+    this.onFileSelected = null
     this.render()
   }
   
@@ -24,6 +25,7 @@ class FileUploadComponent {
     const file = fileInputEvent.target.files[0]
     if (file && file.type === 'text/csv'){
         this.submittedFile = file
+        this.onFileSelected(file)
     }
     })
 }

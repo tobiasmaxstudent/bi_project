@@ -1,17 +1,37 @@
-import express from 'express'
-import path from 'path'
-import { fileURLToPath } from 'url'
-const app = express()
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+import { FileUploadComponent } from "./FileUpLoad-component.js";
+import { TableComponent } from "./Table-component.js";
+import { CsvTable, CsvParser, CSVFormat } from '../csv-module/src/index.js'
+class App {
+  constructor() {
+    this.appContainer = document.getElementById('app')
+    this.createContainers()
+    this.initializeComponents()
+  }
 
-app.use(express.static(path.join(__dirname, 'public')))
+  createContainers() {
+    const uploadDiv = document.createElement('div')
+    uploadDiv.id = 'upload-container'
 
-app.get('/',(res, req) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'))
-})
+    const tableDiv = document.createElement('div')
+    tableDiv.id = 'table-container'
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server runs on http://localhost:${PORT}`);
-});
+    this.appContainer.appendChild(uploadDiv)
+    this.appContainer.appendChild(tableDiv)
+  }
+
+  initializeComponents() {
+    this.fileUpload = new FileUploadComponent('upload-container')
+    this.table = new TableComponent('table-container')
+    this.fileUpload.onFileSelected = (file) => {
+    this.handleFileSelected(file)
+    }
+  }
+
+  handleFileSelected(file) {
+  // 1. Läs filinnehållet
+  // 2. Parsa med CsvTable.fromCSV()
+  // 3. Skicka till table via setData()
+}
+}
+
+new App()
