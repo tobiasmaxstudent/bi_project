@@ -2,6 +2,10 @@ import { FileUploadComponent } from "./FileUpLoad-component.js";
 import { TableComponent } from "./Table-component.js";
 import { CsvTable, CsvParser, CSVFormat } from '../csv-module/src/index.js'
 
+/**
+ * Main application class.
+ * Handles initialization and coordination between components.
+ */
 class App {
   constructor() {
     this.appContainer = document.getElementById('app')
@@ -12,7 +16,7 @@ class App {
     this.#createContainers()
     this.#initializeComponents()
   }
-  
+
   #createContainers() {
     const instructionDiv = document.createElement('div')
     instructionDiv.id = 'instruction-container'
@@ -51,6 +55,9 @@ class App {
     this.table = new TableComponent('table-container')
     this.fileUpload.onFileSelected = (file) => {
       this.#handleSelectedFile(file)
+    }
+    this.fileUpload.onInvalidFile = () => {
+      this.#showError('Only CSV files are allowed.')
     }
     this.fileUpload.onClear = () => {
       document.getElementById('error-container').innerHTML = ''
