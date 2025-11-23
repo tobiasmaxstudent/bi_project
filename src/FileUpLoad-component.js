@@ -20,15 +20,38 @@ export class FileUploadComponent {
   }
   
   attachListeners() {
-    const fileInput = document.getElementById('file-input')
-    fileInput.addEventListener('change', (fileInputEvent) =>{
-    const file = fileInputEvent.target.files[0]
-    if (file && file.type === 'text/csv'){
-        this.submittedFile = file
+  const fileInput = document.getElementById('file-input')
+  const dropZone = document.getElementById('drop-zone')
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+  })
+
+  dropZone.addEventListener('drop',(e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const file = e.dataTransfer.files[0]
+    if (file && file.type === 'text/csv') {
+      this.submittedFile = file
+      if (this.onFileSelected) {
         this.onFileSelected(file)
+      }
     }
-    })
+  })
+
+  fileInput.addEventListener('change', (fileInputEvent) => {
+    const file = fileInputEvent.target.files[0]
+    
+    if (!file || file.type !== 'text/csv') return
+    if (!this.onFileSelected) return
+    
+    this.submittedFile = file
+    this.onFileSelected(file)
+    console.log('File uploaded')
+  })
 }
+
     getFile() {
         return this.submittedFile
     }

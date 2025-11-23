@@ -1,46 +1,264 @@
-body {
-  font-family: "Arial", sans-serif;
+/* ---------- Base layout & typography ---------- */
+
+:root {
+  --bg: #0f172a;
+  --card-bg: #0b1220;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.1);
+  --accent-strong: rgba(56, 189, 248, 0.25);
+  --border-subtle: rgba(148, 163, 184, 0.35);
+  --danger: #f97373;
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+  --radius-lg: 16px;
+  --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.85);
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: radial-gradient(circle at top, #1e293b 0, #020617 55%, #000 100%);
+  color: var(--text-main);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ---------- App shell ---------- */
+
+#app {
+  width: 100%;
+  max-width: 1100px;
+  margin: 32px 16px;
+  padding: 24px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.94), #020617);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  backdrop-filter: blur(16px);
+}
+
+/* Stack the internal containers with spacing */
+#error-container,
+#upload-container,
+#table-container {
+  margin-bottom: 20px;
+}
+
+/* ---------- Error message ---------- */
+
+.error-message {
+  background: rgba(248, 113, 113, 0.08);
+  border-left: 4px solid var(--danger);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  color: #fecaca;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error-message::before {
+  content: "⚠";
+  font-size: 1rem;
+}
+
+/* ---------- Upload area ---------- */
+
+#upload-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Drop zone label acts as the visible upload box */
 #drop-zone {
+  flex: 1 1 260px;
+  min-height: 140px;
+  position: relative;
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--border-subtle);
+  background: radial-gradient(circle at top left, #1e293b 0, #020617 55%);
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 500px;
-  max-width: 100%;
-  height: 200px;
-  padding: 1em;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  color: slategray;
+  padding: 16px 20px;
+  text-align: center;
   cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.1s ease,
+    background 0.2s ease;
 }
 
-#file-input {
+#drop-zone::before {
+  content: "📄";
+  font-size: 1.4rem;
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  opacity: 0.7;
+}
+
+/* Hover / focus styles for draggy feeling */
+#drop-zone:hover,
+#drop-zone:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+  background: radial-gradient(circle at top left, #1f2937 0, #020617 60%);
+  transform: translateY(-1px);
+  color: var(--text-main);
+}
+
+/* Hide the native file input */
+#drop-zone input[type="file"] {
   display: none;
 }
 
-#preview {
-  width: 500px;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  list-style: none;
-  padding: 0;
+/* ---------- Buttons ---------- */
+
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-strong);
+  transition:
+    background 0.12s ease,
+    transform 0.08s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease;
+  white-space: nowrap;
 }
 
-#preview li {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  margin: 0;
+button:hover {
+  background: var(--accent);
+  color: #0b1120;
+  box-shadow: 0 8px 18px rgba(56, 189, 248, 0.3);
+  transform: translateY(-0.5px);
+}
+
+button:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: none;
+}
+
+/* Style the specific clear button a touch differently if you like */
+#clear-btn {
+  background: rgba(15, 23, 42, 0.85);
+  color: var(--text-main);
+  border-color: rgba(148, 163, 184, 0.6);
+}
+
+#clear-btn:hover {
+  background: rgba(15, 23, 42, 1);
+  color: var(--accent);
+}
+
+/* ---------- Table styles ---------- */
+
+#table-container {
+  margin-top: 12px;
+  padding: 14px 14px 4px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), #020617);
+  border: 1px solid rgba(51, 65, 85, 0.9);
+  overflow-x: auto;
+}
+
+/* Target any table inside the container */
+#table-container table {
   width: 100%;
-  height: 100px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-#preview img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
+#table-container thead {
+  background: linear-gradient(135deg, rgba(15, 118, 110, 0.35), rgba(8, 47, 73, 0.85));
+}
+
+#table-container th,
+#table-container td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(30, 64, 175, 0.35);
+  text-align: left;
+  white-space: nowrap;
+}
+
+#table-container th {
+  font-weight: 600;
+  color: #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+#table-container tbody tr:nth-child(even) {
+  background-color: rgba(15, 23, 42, 0.85);
+}
+
+#table-container tbody tr:nth-child(odd) {
+  background-color: rgba(15, 23, 42, 0.6);
+}
+
+#table-container tbody tr:hover {
+  background-color: rgba(56, 189, 248, 0.09);
+}
+
+/* Allow table contents to wrap on smaller screens if needed */
+#table-container td {
+  max-width: 260px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* ---------- Small screen tweaks ---------- */
+
+@media (max-width: 768px) {
+  #app {
+    margin: 16px 10px;
+    padding: 18px;
+  }
+
+  #upload-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #drop-zone {
+    min-height: 120px;
+  }
+
+  #table-container {
+    padding: 10px;
+  }
+
+  #table-container th,
+  #table-container td {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
 }

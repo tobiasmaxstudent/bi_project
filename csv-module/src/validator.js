@@ -20,10 +20,10 @@ export class Validator {
         if (!Array.isArray(row)) {
             throw new TypeError('Row must be an array')
         }
-        if (row.length !== expectedLength) {
-            throw new TypeError(`Row has length ${row.length}, expected ${expectedLength}`)
+        if (row.length < expectedLength) {
+            return [...row, ...Array(expectedLength -row.length).fill('')]
         }
-        return row.slice()
+        return row.slice(0, expectedLength)
     }
     validateTableInput(headers, rows) {
         const headersCopy = this.validateHeaders(headers)
