@@ -9,9 +9,10 @@ export class TableComponent {
         this.container.innerHTML = html
     }
     setData(csvTable) {
-        this.submittedData = csvTable
-        this.updateTable()
-    }
+  this.submittedData = csvTable
+  this.container.style.display = 'block'
+  this.updateTable()
+}
 
     updateTable() {
         this.container.innerHTML = this.#buildTableHTML()
