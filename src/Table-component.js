@@ -63,5 +63,4 @@ export class TableComponent {
         }).join('')
         return `<tbody>${bodyRows}</tbody>`
     }
-
 }
